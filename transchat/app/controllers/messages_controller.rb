@@ -5,8 +5,9 @@ class MessagesController < ApplicationController
         render json: message
     end
 
-    def index 
-        messages = Message.all 
+    def show 
+        room = Session.find(params[:id]).room
+        messages = room.messages
         render json: messages 
     end
 

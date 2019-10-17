@@ -5,8 +5,8 @@ class SessionsController < ApplicationController
         render json: session
     end
 
-    def index 
-        sessions = Session.all 
+    def show 
+        sessions = Session.find_by(user_id: params[:id]) 
         render json: sessions 
     end
     
