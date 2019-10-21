@@ -1,7 +1,14 @@
+require_relative "../helpers/translate.rb"
+
+
 class MessagesController < ApplicationController
 
     def create 
         message = Message.create(message_params)
+        byebug
+        trans_string = translate_string(message.content, params[:language])
+        trans_message = TransMessage.create(message_id: message.id, language: params[:language], content: trans_string)
+        
         render json: message
     end
 
@@ -14,7 +21,7 @@ class MessagesController < ApplicationController
     private 
 
     def message_params 
-        params.require(:message).permit(:session_id,:content)
+        params.require(:message).permit(:session_id,:content, :language)
     end
 
 end
