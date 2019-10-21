@@ -11,7 +11,6 @@ class MessagesController < ApplicationController
         render json: messages 
     end
 
-
     private 
 
     def message_params 
