@@ -14,7 +14,8 @@ class MessagesController < ApplicationController
     def show 
         room = Session.find(params[:id]).room
         messages = room.messages
-        render json: MessageSerializer.new(messages)
+        render json: messages.to_json(:include => {
+            :trans_messages => {:only => [:content, :language]}})
     end
 
     private 
