@@ -5,7 +5,6 @@ class MessagesController < ApplicationController
 
     def create 
         message = Message.create(message_params)
-        byebug
         trans_string = translate_string(message.content, params[:language])
         trans_message = TransMessage.create(message_id: message.id, language: params[:language], content: trans_string)
         
@@ -15,7 +14,7 @@ class MessagesController < ApplicationController
     def show 
         room = Session.find(params[:id]).room
         messages = room.messages
-        render json: messages 
+        render json: MessageSerializer.new(messages)
     end
 
     private 
