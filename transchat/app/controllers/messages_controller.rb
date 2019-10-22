@@ -6,6 +6,7 @@ class MessagesController < ApplicationController
     def create 
         message = Message.create(message_params)
         trans_string = translate_string(message.content, params[:language])
+        trans_string.text.gsub!(/&#39;/, "'");
         trans_message = TransMessage.create(message_id: message.id, language: params[:language], content: trans_string)
         
         render json: message
