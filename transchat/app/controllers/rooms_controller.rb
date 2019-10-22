@@ -12,12 +12,20 @@ class RoomsController < ApplicationController
 
     def destroy
         room = Room.find(params[:id])
-        sessions = room.sessions
-        messages = room.messages
-        tran_messages = room.trans_messages 
-        tran_messages.destroy_all
-        messages.destroy_all
-        sessions.destroy_all
+        session1 = room.sessions.first
+        session2 = room.sessions.last
+        messages1 = session1.messages
+        messages2 = session2.messages
+        messages2.each do |message| 
+            message.trans_messages.destroy_all
+         end 
+        messages1.each do |message| 
+            message.trans_messages.destroy_all
+         end    
+        messages1.destroy_all
+        messages2.destroy_all
+        session1.destroy
+        session2.destroy
         room.destroy
         render json: room
     end
